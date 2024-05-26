@@ -1,0 +1,44 @@
+diff --git a/CMakeOptions.txt b/CMakeOptions.txt
+index 2c58cd5c..e8582d4f 100644
+--- a/CMakeOptions.txt
++++ b/CMakeOptions.txt
+@@ -45,7 +45,7 @@ cmake_dependent_option(SUPPORT_DEFAULT_FONT "Default font is loaded on window in
+ cmake_dependent_option(SUPPORT_SCREEN_CAPTURE "Allow automatic screen capture of current screen pressing F12, defined in KeyCallback()" ON CUSTOMIZE_BUILD ON)
+ cmake_dependent_option(SUPPORT_GIF_RECORDING "Allow automatic gif recording of current screen pressing CTRL+F12, defined in KeyCallback()" ON CUSTOMIZE_BUILD ON)
+ cmake_dependent_option(SUPPORT_BUSY_WAIT_LOOP "Use busy wait loop for timing sync instead of a high-resolution timer" OFF CUSTOMIZE_BUILD OFF)
+-cmake_dependent_option(SUPPORT_EVENTS_WAITING "Wait for events passively (sleeping while no events) instead of polling them actively every frame" OFF CUSTOMIZE_BUILD OFF)
++cmake_dependent_option(SUPPORT_EVENTS_WAITING "Wait for events passively (sleeping while no events) instead of polling them actively every frame" ON CUSTOMIZE_BUILD ON)
+ cmake_dependent_option(SUPPORT_WINMM_HIGHRES_TIMER "Setting a higher resolution can improve the accuracy of time-out intervals in wait functions" ON CUSTOMIZE_BUILD ON)
+ cmake_dependent_option(SUPPORT_COMPRESSION_API "Support for compression API" ON CUSTOMIZE_BUILD ON)
+ cmake_dependent_option(SUPPORT_EVENTS_AUTOMATION "Support automatic generated events, loading and recording of those events when required" OFF CUSTOMIZE_BUILD OFF)
+@@ -61,19 +61,19 @@ cmake_dependent_option(SUPPORT_IMAGE_MANIPULATION "Support multiple image editin
+ cmake_dependent_option(SUPPORT_FILEFORMAT_PNG "Support loading PNG as textures" ON CUSTOMIZE_BUILD ON)
+ cmake_dependent_option(SUPPORT_FILEFORMAT_DDS "Support loading DDS as textures" ON CUSTOMIZE_BUILD ON)
+ cmake_dependent_option(SUPPORT_FILEFORMAT_HDR "Support loading HDR as textures" ON CUSTOMIZE_BUILD ON)
+-cmake_dependent_option(SUPPORT_FILEFORMAT_PIC "Support loading PIC as textures" ${OFF} CUSTOMIZE_BUILD OFF)
+-cmake_dependent_option(SUPPORT_FILEFORMAT_PNM "Support loading PNM as textures" ${OFF} CUSTOMIZE_BUILD OFF)
+-cmake_dependent_option(SUPPORT_FILEFORMAT_KTX "Support loading KTX as textures" ${OFF} CUSTOMIZE_BUILD OFF)
+-cmake_dependent_option(SUPPORT_FILEFORMAT_ASTC "Support loading ASTC as textures" ${OFF} CUSTOMIZE_BUILD OFF)
+-cmake_dependent_option(SUPPORT_FILEFORMAT_BMP "Support loading BMP as textures" ${OFF} CUSTOMIZE_BUILD OFF)
+-cmake_dependent_option(SUPPORT_FILEFORMAT_TGA "Support loading TGA as textures" ${OFF} CUSTOMIZE_BUILD OFF)
+-cmake_dependent_option(SUPPORT_FILEFORMAT_JPG "Support loading JPG as textures" ${OFF} CUSTOMIZE_BUILD OFF)
++cmake_dependent_option(SUPPORT_FILEFORMAT_PIC "Support loading PIC as textures" ON CUSTOMIZE_BUILD ON)
++cmake_dependent_option(SUPPORT_FILEFORMAT_PNM "Support loading PNM as textures" ON CUSTOMIZE_BUILD ON)
++cmake_dependent_option(SUPPORT_FILEFORMAT_KTX "Support loading KTX as textures" ON CUSTOMIZE_BUILD ON)
++cmake_dependent_option(SUPPORT_FILEFORMAT_ASTC "Support loading ASTC as textures" ON CUSTOMIZE_BUILD ON)
++cmake_dependent_option(SUPPORT_FILEFORMAT_BMP "Support loading BMP as textures" ON CUSTOMIZE_BUILD ON)
++cmake_dependent_option(SUPPORT_FILEFORMAT_TGA "Support loading TGA as textures" ON CUSTOMIZE_BUILD ON)
++cmake_dependent_option(SUPPORT_FILEFORMAT_JPG "Support loading JPG as textures" ON CUSTOMIZE_BUILD ON)
+ cmake_dependent_option(SUPPORT_FILEFORMAT_GIF "Support loading GIF as textures" ON CUSTOMIZE_BUILD ON)
+ cmake_dependent_option(SUPPORT_FILEFORMAT_QOI "Support loading QOI as textures" ON CUSTOMIZE_BUILD ON)
+-cmake_dependent_option(SUPPORT_FILEFORMAT_PSD "Support loading PSD as textures" ${OFF} CUSTOMIZE_BUILD OFF)
+-cmake_dependent_option(SUPPORT_FILEFORMAT_PKM "Support loading PKM as textures" ${OFF} CUSTOMIZE_BUILD OFF)
+-cmake_dependent_option(SUPPORT_FILEFORMAT_PVR "Support loading PVR as textures" ${OFF} CUSTOMIZE_BUILD OFF)
+-cmake_dependent_option(SUPPORT_FILEFORMAT_SVG "Support loading SVG as textures" ${OFF} CUSTOMIZE_BUILD OFF)
++cmake_dependent_option(SUPPORT_FILEFORMAT_PSD "Support loading PSD as textures" ON CUSTOMIZE_BUILD ON)
++cmake_dependent_option(SUPPORT_FILEFORMAT_PKM "Support loading PKM as textures" ON CUSTOMIZE_BUILD ON)
++cmake_dependent_option(SUPPORT_FILEFORMAT_PVR "Support loading PVR as textures" ON CUSTOMIZE_BUILD ON)
++cmake_dependent_option(SUPPORT_FILEFORMAT_SVG "Support loading SVG as textures" ON CUSTOMIZE_BUILD ON)
+ 
+ # rtext.c
+ cmake_dependent_option(SUPPORT_FILEFORMAT_FNT "Support loading fonts in FNT format" ON CUSTOMIZE_BUILD ON)
