@@ -93,7 +93,6 @@ static void redraw_current_media(struct state *state) {
 	float scale = fminf(w / (float) t.width, h / (float) t.height);
 	Vector2 pos = {(w - t.width * scale) / 2, (h - t.height * scale) / 2};
 	DrawTextureEx(t, pos, 0, scale, WHITE);
-	DrawRectangleV(pos, (Vector2){10, 10}, RED);
 	EndMode2D();
 
 	render_text(state);
