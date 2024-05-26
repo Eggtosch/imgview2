@@ -8,9 +8,10 @@ static const char *image_text(struct media *self) {
 	return "";
 }
 
-static void image_set_index(struct media *self, int inc_or_dec) {
+static void image_set_index(struct media *self, int index_mode, int amount) {
 	(void) self;
-	(void) inc_or_dec;
+	(void) index_mode;
+	(void) amount;
 }
 
 static bool image_try_open(struct media *media, const char *mediapath) {

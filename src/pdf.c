@@ -75,9 +75,14 @@ static const char *pdf_text(struct media *self) {
 	return TextFormat("(%d/%d)", pdf->current_page + 1, pdf->npages);
 }
 
-static void pdf_set_index(struct media *self, int inc_or_dec) {
+static void pdf_set_index(struct media *self, int index_mode, int amount) {
 	struct pdf *pdf = self->userdata;
-	pdf->current_page += inc_or_dec;
+	if (index_mode == INDEX_RELATIVE) {
+		pdf->current_page += amount;
+	} else {
+		pdf->current_page = pdf->npages * amount / 10;
+	}
+
 	if (pdf->current_page >= pdf->npages) {
 		pdf->current_page -= pdf->npages;
 	} else if (pdf->current_page < 0) {

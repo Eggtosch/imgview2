@@ -99,6 +99,22 @@ static void redraw_current_media(struct state *state) {
 	EndDrawing();
 }
 
+static int get_number(int key) {
+	switch (key) {
+		case KEY_ZERO: return 0;
+		case KEY_ONE: return 1;
+		case KEY_TWO: return 2;
+		case KEY_THREE: return 3;
+		case KEY_FOUR: return 4;
+		case KEY_FIVE: return 5;
+		case KEY_SIX: return 6;
+		case KEY_SEVEN: return 7;
+		case KEY_EIGHT: return 8;
+		case KEY_NINE: return 9;
+		default: return -1;
+	}
+}
+
 int main(int argc, const char **argv) {
 	if (argc < 2) {
 		printf("Usage as zoom: %s --zoom <image>\n", argv[0]);
@@ -192,13 +208,22 @@ int main(int argc, const char **argv) {
 			}
 			case KEY_UP:
 			case KEY_DOWN: {
-				int shift = IsKeyDown(KEY_LEFT_SHIFT) ? 5 : 1;
+				int shift = IsKeyDown(KEY_LEFT_SHIFT) ? state.is_video ? 50 : 5 : 1;
 				int dir = key == KEY_UP ? -1 : 1;
 				struct media *media = &state.medias[state.current_media];
-				media->set_index(media, dir * shift);
+				media->set_index(media, INDEX_RELATIVE, dir * shift);
 				break;
 			}
-			default: break;
+			default: {
+				int n = get_number(key);
+				if (n < 0) {
+					break;
+				}
+
+				struct media *media = &state.medias[state.current_media];
+				media->set_index(media, INDEX_ABSOLUTE, n);
+				break;
+			}
 		}
 
 		if (state.is_video && IsKeyPressed(KEY_SPACE)) {
@@ -211,7 +236,7 @@ int main(int argc, const char **argv) {
 
 		if (state.video_running) {
 			struct media *media = &state.medias[state.current_media];
-			media->set_index(media, 1);
+			media->set_index(media, INDEX_RELATIVE, 1);
 		}
 
 		redraw_current_media(&state);

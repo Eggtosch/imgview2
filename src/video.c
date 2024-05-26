@@ -14,7 +14,6 @@ struct video {
 	lp_ac_instance instance;
 	lp_ac_decoder decoder;
 
-	double current_time;
 	double fps;
 	double duration;
 };
@@ -45,7 +44,6 @@ static Texture2D video_draw_frame(struct video *video, int n) {
 		}
 
 		struct _ac_video_stream_info info = video->decoder->stream_info.additional_info.video_info;
-		video->current_time = video->decoder->timecode;
 
 		Image i = {
 			.data = video->decoder->pBuffer,
@@ -98,22 +96,32 @@ static int video_close_cb(void *sender) {
 static const char *video_text(struct media *self) {
 	struct video *video = self->userdata;
 	if (self->texture.id > 0) {
-		return TextFormat("frame %04d @ %g fps", (int) (video->current_time * video->fps), video->fps);
+		return TextFormat("time %.2lf/%.2lf @ %g fps", video->decoder->timecode, video->duration, video->fps);
 	} else {
 		return "(unable to decode frame)";
 	}
 }
 
-static void video_set_index(struct media *self, int inc_or_dec) {
+static void video_set_index(struct media *self, int index_mode, int amount) {
 	struct video *video = self->userdata;
+	int current_time = 1000 * video->decoder->timecode;
+	int nframes = amount;
 
-	if (inc_or_dec < 0) {
-		int current_time = 1000 * video->current_time;
-		ac_seek(video->decoder, -1, current_time - 1000 / video->fps * abs(inc_or_dec));
+	if (index_mode == INDEX_RELATIVE) {
+		int delta = 1000 / video->fps * amount;
+		if (delta < 0) {
+			ac_seek(video->decoder, -1, current_time + delta);
+			nframes = 1;
+		}
+	} else {
+		int time = 1000 * video->duration * amount / 10;
+		int dir = current_time < time ? 0 : -1;
+		ac_seek(video->decoder, dir, time);
+		nframes = 1;
 	}
 
 	UnloadTexture(self->texture);
-	self->texture = video_draw_frame(video, abs(inc_or_dec));
+	self->texture = video_draw_frame(video, nframes);
 }
 
 static bool video_open(struct media *media, const char *mediapath) {
