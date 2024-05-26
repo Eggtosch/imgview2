@@ -156,14 +156,14 @@ static bool video_open(struct media *media, const char *mediapath) {
 		}
 	}
 
-	video->fps = video->decoder->stream_info.additional_info.video_info.frames_per_second;
-	video->duration = video->instance->info.duration / 1000.0;
-
-	if (!video->instance->opened) {
+	if (!video->instance->opened || video->decoder == NULL) {
 		free(video);
 		*media = (struct media){0};
 		return false;
 	}
+
+	video->fps = video->decoder->stream_info.additional_info.video_info.frames_per_second;
+	video->duration = video->instance->info.duration / 1000.0;
 
 	media->texture = video_draw_frame(video, 1);
 
