@@ -14,6 +14,8 @@ struct video {
 	lp_ac_instance instance;
 	lp_ac_decoder decoder;
 
+	int width;
+	int height;
 	double fps;
 	double duration;
 };
@@ -97,7 +99,9 @@ static int video_close_cb(void *sender) {
 static const char *video_text(struct media *self) {
 	struct video *video = self->userdata;
 	if (self->texture.id > 0) {
-		return TextFormat("time %.2lf/%.2lf @ %g fps", video->decoder->timecode, video->duration, video->fps);
+		double t = video->decoder->timecode;
+		double d = video->duration;
+		return TextFormat("time %.2lf/%.2lf @ %g fps (%dx%d)", t, d, video->fps, video->width, video->height);
 	} else {
 		return "(unable to decode frame)";
 	}
@@ -164,6 +168,8 @@ static bool video_open(struct media *media, const char *mediapath) {
 	}
 
 	video->fps = video->decoder->stream_info.additional_info.video_info.frames_per_second;
+	video->width = video->decoder->stream_info.additional_info.video_info.frame_width;
+	video->height = video->decoder->stream_info.additional_info.video_info.frame_height;
 	video->duration = video->instance->info.duration / 1000.0;
 
 	media->texture = video_draw_frame(video, -1);
