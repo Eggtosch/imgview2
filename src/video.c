@@ -34,13 +34,14 @@ static Texture2D video_draw_frame(struct video *video, int n) {
 			continue;
 		}
 
-		if (ac_decode_package(pckt, video->decoder) == 0 || n > 1) {
+		int ret = ac_decode_package(pckt, video->decoder);
+		if (ret == 0 && n == 1) {
 			ac_free_package(pckt);
-			if (video->decoder->timecode == 0 || n-- > 1) {
-				continue;
-			}
-
 			return (Texture2D){0};
+		} else if (n > 1 || (ret == 0 && n < 0)) {
+			ac_free_package(pckt);
+			n--;
+			continue;
 		}
 
 		struct _ac_video_stream_info info = video->decoder->stream_info.additional_info.video_info;
@@ -165,7 +166,7 @@ static bool video_open(struct media *media, const char *mediapath) {
 	video->fps = video->decoder->stream_info.additional_info.video_info.frames_per_second;
 	video->duration = video->instance->info.duration / 1000.0;
 
-	media->texture = video_draw_frame(video, 1);
+	media->texture = video_draw_frame(video, -1);
 
 	return true;
 }
