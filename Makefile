@@ -50,4 +50,4 @@ clean:
 
 .PHONY:
 clean-all:
-	$(RM) $(OBJDIR)
+	$(RM) -r $(OBJDIR)
