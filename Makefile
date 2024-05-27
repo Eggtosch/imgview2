@@ -5,7 +5,8 @@ LDFLAGS := -pipe -flto
 
 CFILES := $(wildcard src/*.c)
 
-FLAGS  := -Wall -Wextra -Isrc/ -pipe -O2 -flto -march=native -s -MMD -MP -ggdb
+INCLUDES := -Isrc/ -Ibin/include/
+FLAGS  := -Wall -Wextra $(INCLUDES) -pipe -O2 -flto -march=native -s -MMD -MP -ggdb
 OBJDIR := bin
 BINARY := bin/imgview
 OBJS   := $(CFILES:%.c=$(OBJDIR)/%.o)
@@ -32,8 +33,10 @@ bin/libraylib.a:
 	mkdir build && \
 	cd build && \
 	cmake -DCUSTOMIZE_BUILD=ON ../ && \
-	make -j20 && \
-	cp raylib/libraylib.a ../../
+	make -j20
+	cp bin/raylib/build/raylib/libraylib.a bin/
+	mkdir bin/include/
+	cp bin/raylib/build/raylib/include/* bin/include/
 
 -include $(HEADER_DEPS)
 $(OBJDIR)/%.o: %.c
