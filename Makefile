@@ -5,7 +5,7 @@ LDFLAGS := -pipe -flto
 
 CFILES := $(wildcard src/*.c)
 
-INCLUDES := -Isrc/ -Ibin/include/
+INCLUDES := -Isrc/ -Ibin/include/ -I/usr/include/ffmpeg/
 FLAGS  := -Wall -Wextra $(INCLUDES) -pipe -O2 -flto -march=native -s -MMD -MP -ggdb
 OBJDIR := bin
 BINARY := bin/imgview
@@ -13,6 +13,11 @@ OBJS   := $(CFILES:%.c=$(OBJDIR)/%.o)
 HEADER_DEPS := $(CFILES:%.c=$(OBJDIR)/%.d)
 
 LIBRARIES := bin/libraylib.a -lm -lmupdf -lavcodec -lavutil -lavformat -lswresample -lswscale
+
+OS := $(shell cat /etc/os-release | rg "Fedora Linux")
+ifneq ($(OS),)
+LIBRARIES := $(LIBRARIES) -lmupdf-third -ljpeg -lpng -ljbig2dec -lopenjp2 -lfreetype -lharfbuzz -lgumbo -lstdc++ -ltesseract -lleptonica -lz
+endif
 
 .PHONY: all install
 all: $(OBJDIR) $(BINARY)
