@@ -24,6 +24,7 @@ all: $(OBJDIR) $(BINARY)
 
 install: all
 	cp $(BINARY) /home/oskar/.local/bin/
+	cp imgview.desktop /home/oskar/.local/share/applications/
 
 $(OBJDIR):
 	mkdir -p $(OBJDIR)/src

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Imgview
+GenericName=Image Viewer
+Comment=View images
+Keywords=imgview;image;viewer
+Exec=imgview %U
+TryExec=imgview
+Terminal=false
+MimeType=image/bmp;image/gif;image/svg+xml;image/x-tga;image/x-xbitmap;image/tiff;image/jpeg;image/png;image/x-webp;image/webp;image/heif;image/heic;image/avif;application/pdf;image/jp2;image/jpeg2000;image/jpx;image/jxl;
