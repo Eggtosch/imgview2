@@ -214,6 +214,11 @@ int main(int argc, const char **argv) {
 				media->set_index(media, INDEX_RELATIVE, dir * shift);
 				break;
 			}
+			case KEY_C: {
+				const char *command = TextFormat("wl-copy '%s'", state.media_paths[state.current_media]);
+				system(command);
+				break;
+			}
 			default: {
 				int n = get_number(key);
 				if (n < 0) {
